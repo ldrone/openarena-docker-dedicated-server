@@ -1,0 +1,34 @@
+version: "3"
+services:
+  gs1:
+    build:
+      context: .
+      args:
+        gsname: duel
+    volumes:
+      - ./demos:/opt/openarena/home/aftershock/demos
+      - ./stats:/opt/openarena/home/aftershock/serverstats
+    ports:
+      - "${IP}:22000:27960/udp"
+    environment:
+      map: ztn3tourney1
+    networks:
+      default:
+        ipv4_address: 172.16.12.10
+  gs2:
+    build:
+      context: .
+      args:
+        gsname: ffa
+    ports:
+      - "${IP}:22001:27960/udp"
+    environment:
+      map: q3trnp1
+    networks:
+      default:
+        ipv4_address: 172.16.12.11
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.16.12.0/24
